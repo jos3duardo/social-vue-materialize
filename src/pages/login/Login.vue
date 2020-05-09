@@ -4,10 +4,28 @@
         <img src="https://static.todamateria.com.br/upload/re/de/redessociaisinteracaopessoas-cke.jpg" class="responsive-img" srcset="">
       </span>
       <span slot="principal">
-        <h2>Login</h2>
-        <input type="email" placeholder="E-mail" value="">
-        <input type="password" placeholder="Senha" value="">
-        <button type="button" class="btn waves-light waves-effect">Entrar</button>
+
+        <span v-if="!cadastro">
+          <h2>Login</h2>
+          <input type="email" placeholder="E-mail" value="">
+          <input type="password" placeholder="Senha" value="">
+          <button class="btn waves-light waves-effect">Entrar</button>
+          <button class="btn waves-light waves-effect orange"
+                  v-on:click="cadastro = !cadastro">Cadastre-se</button>
+        </span>
+
+        <span v-if="cadastro">
+          <h2>Cadastro</h2>
+          <input type="text" placeholder="Nome" value="">
+          <input type="email" placeholder="E-mail" value="">
+          <input type="password" placeholder="Senha" value="">
+          <input type="password" placeholder="Confirme sua Senha" value="">
+          <button class="btn waves-light waves-effect">Enviar</button>
+          <button class="btn waves-light waves-effect orange"
+                v-on:click="cadastro = !cadastro">Já tenho conta</button>
+        </span>
+
+
       </span>
 
 
@@ -17,21 +35,15 @@
 
 <script>
   import LoginTemplate from "../../templates/LoginTemplate";
-  import CardConteudoVue from "../../components/social/CardConteudoVue";
-  import CardDetalheVue from "../../components/social/CardDetalheVue";
-  import PublicarConteudoVue from "../../components/social/PublicarConteudoVue";
 
   export default {
     name: 'Login',
     components: {
-      CardConteudoVue,
-      CardDetalheVue,
-      PublicarConteudoVue,
       LoginTemplate
     },
     data () {
       return {
-
+        cadastro: false
       }
     }
   }
