@@ -1,8 +1,15 @@
 <template>
   <login-template>
+      <span slot="menuesquerdo">
+        <img src="https://static.todamateria.com.br/upload/re/de/redessociaisinteracaopessoas-cke.jpg" class="responsive-img" srcset="">
+      </span>
+      <span slot="principal">
+        <h2>Login</h2>
+        <input type="email" placeholder="E-mail" value="">
+        <input type="password" placeholder="Senha" value="">
+        <button type="button" class="btn waves-light waves-effect">Entrar</button>
+      </span>
 
-
-    <h2>Login</h2>
 
   </login-template>
 
