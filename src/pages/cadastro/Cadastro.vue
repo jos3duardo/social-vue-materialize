@@ -4,17 +4,16 @@
         <img src="https://static.todamateria.com.br/upload/re/de/redessociaisinteracaopessoas-cke.jpg" class="responsive-img" srcset="">
       </span>
       <span slot="principal">
-
         <span>
-          <h2>Login</h2>
+          <h2>Cadastro</h2>
+          <input type="text" placeholder="Nome" value="">
           <input type="email" placeholder="E-mail" value="">
           <input type="password" placeholder="Senha" value="">
-          <button class="btn waves-light waves-effect">Entrar</button>
-          <router-link to="/cadastro" class="btn waves-light waves-effect orange">Cadastra-se</router-link>
+          <input type="password" placeholder="Confirme sua Senha" value="">
+          <button class="btn waves-light waves-effect">Enviar</button>
+          <router-link to="/login"  class="btn waves-light waves-effect orange">Já tenho conta</router-link>
         </span>
       </span>
-
-
   </login-template>
 
 </template>
@@ -23,7 +22,7 @@
   import LoginTemplate from "../../templates/LoginTemplate";
 
   export default {
-    name: 'Login',
+    name: 'Cadastro',
     components: {
       LoginTemplate
     },

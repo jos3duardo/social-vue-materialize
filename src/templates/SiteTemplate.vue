@@ -4,6 +4,7 @@
       <nav-bar-vue cor="green darken-1" url="/" logo="Social">
         <li> <router-link to="/">Home</router-link></li>
         <li> <router-link to="/login">Login</router-link></li>
+        <li> <router-link to="/cadastro">Cadastra-se</router-link></li>
       </nav-bar-vue>
     </header>
     <main>
