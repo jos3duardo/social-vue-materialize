@@ -1,44 +1,27 @@
 <template>
   <div class="row">
-    <div class="card">
-      <div class="card-content">
-        <div class="row valign-wrapper">
-          <grid-vue tamanho="1">
-            <img :src="perfil" :alt="nome" class="circle responsive-img"> <!-- notice the "circle" class -->
-          </grid-vue>
-
-          <grid-vue tamanho="11">
-              <span class="black-text">
-                <strong>{{nome}}</strong> - <small>{{data}}</small>
-              </span>
-          </grid-vue>
-        </div>
-
-        <slot></slot>
-      </div>
-      <div class="card-action">
-        <p>
-          <i class="material-icons">favorite_border</i>
-          <i class="material-icons">insert_comment</i>
-        </p>
-      </div>
-    </div>
+    <grid-vue class="input-field" tamanho="12">
+      <textarea v-model="conteudo" id="conteudoId" class="materialize-textarea"></textarea>
+      <label for="conteudoId">O que está acontecendo?</label>
+    </grid-vue>
+    <p>
+      <grid-vue v-if="conteudo" class="btn waves-effect waves-light  right" tamanho="2 offset-s10">Publicar</grid-vue>
+    </p>
   </div>
-
 </template>
 
 <script>
   import GridVue from "../layouts/GridVue";
 
   export default {
-    name: 'CardConteudoVue',
-    props: ['perfil', 'nome', 'data'],
+    name: 'PublicarConteudoVue',
+    props: [],
     components: {
       GridVue,
     },
     data () {
       return {
-
+        conteudo: ''
       }
     }
   }
