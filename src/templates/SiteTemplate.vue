@@ -60,12 +60,15 @@
       let usuarioAux = sessionStorage.getItem('usuario')
       if (usuarioAux){
         this.usuario = JSON.parse(usuarioAux)
+      }else{
+        this.$router.push('/login')
       }
     },
     methods: {
       sair(){
         sessionStorage.clear()
         this.usuario = false
+        this.$router.push('/login')
       }
     }
   }
