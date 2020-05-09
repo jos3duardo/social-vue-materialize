@@ -1,7 +1,10 @@
 <template>
   <span>
     <header>
-      <nav-bar-vue cor="green darken-1" url="#" logo="Social" />
+      <nav-bar-vue cor="green darken-1" url="#/" logo="Social">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/login">Login</a></li>
+      </nav-bar-vue>
     </header>
     <main>
       <div class="container">

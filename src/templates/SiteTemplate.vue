@@ -1,7 +1,10 @@
 <template>
   <span>
     <header>
-      <nav-bar-vue cor="green darken-1" url="#" logo="Social" />
+      <nav-bar-vue cor="green darken-1" url="#/" logo="Social">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/login">Login</a></li>
+      </nav-bar-vue>
     </header>
     <main>
       <div class="container">
@@ -9,24 +12,14 @@
 
           <grid-vue tamanho="4">
             <card-menu-vue>
-              <div class="row valign-wrapper">
-               <grid-vue tamanho="4">
-                  <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-               </grid-vue>
-
-               <grid-vue tamanho="8">
-                  <span class="black-text">
-                    <h5>Loana Sousa</h5> Add the "circle" class to it to make it appear circular.
-                  </span>
-               </grid-vue>
-              </div>
+              <slot name="menuesquerdo"></slot>
             </card-menu-vue>
             <card-menu-vue>
               <h3>Teste</h3>
             </card-menu-vue>
           </grid-vue>
           <grid-vue tamanho="8">
-            <slot></slot>
+            <slot name="principal"></slot>
           </grid-vue>
 
         </div>

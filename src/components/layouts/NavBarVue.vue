@@ -1,11 +1,9 @@
 <template>
   <nav :class="cor || 'blue'">
     <div class="nav-wrapper container">
-      <a :href="url || '#'" class="brand-logo">{{logo || 'Sistema'}}</a>
+      <a :href="url || '#/'" class="brand-logo">{{logo || 'Sistema'}}</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">JavaScript</a></li>
+        <slot></slot>
       </ul>
     </div>
   </nav>
