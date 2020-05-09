@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <site-template>
     <publicar-conteudo-vue />
     <card-conteudo-vue
       perfil="https://materializecss.com/images/yuna.jpg"
@@ -12,11 +12,12 @@
               I am convenient because I require little markup to use effectively."
         />
     </card-conteudo-vue>
-  </span>
+  </site-template>
 
 </template>
 
 <script>
+  import SiteTemplate from "../../templates/SiteTemplate";
   import CardConteudoVue from "../../components/social/CardConteudoVue";
   import CardDetalheVue from "../../components/social/CardDetalheVue";
   import PublicarConteudoVue from "../../components/social/PublicarConteudoVue";
@@ -26,7 +27,8 @@
     components: {
       CardConteudoVue,
       CardDetalheVue,
-      PublicarConteudoVue
+      PublicarConteudoVue,
+      SiteTemplate
     },
     data () {
       return {
