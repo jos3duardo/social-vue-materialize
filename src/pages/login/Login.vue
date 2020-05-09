@@ -21,23 +21,50 @@
 
 <script>
   import LoginTemplate from "../../templates/LoginTemplate";
+  import axios from 'axios'
 
   export default {
     name: 'Login',
     components: {
       LoginTemplate,
     },
-    methods: {
-      login(){
-        alert('ok')
-      }
-    },
     data () {
       return {
        email: '',
        password: ''
       }
-    }
+    },
+    methods: {
+        login(){
+          console.log("ok");
+          axios.post(`http://127.0.0.1:8000/api/login`, {
+            email: this.email,
+            password:this.password
+          })
+            .then(response => {
+              console.log(response)
+              if(response.data.token){
+                // login com sucesso
+                console.log('login com sucesso')
+              }else if(response.data.status == false){
+                //login não existe
+                console.log('login não existe')
+                alert('Login invalido')
+              }else{
+                // erros de validação
+                console.log('erros de validação')
+                let erros = '';
+                for (let erro of Object.values(response.data)){
+                  erros = erro + " ";
+                }
+                alert(erros)
+              }
+            })
+            .catch(e => {
+              console.log(e)
+            })
+        }
+    },
   }
 </script>
 
