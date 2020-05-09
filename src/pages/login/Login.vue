@@ -7,9 +7,9 @@
 
         <span>
           <h2>Login</h2>
-          <input type="email" placeholder="E-mail" value="">
-          <input type="password" placeholder="Senha" value="">
-          <button class="btn waves-light waves-effect">Entrar</button>
+          <input type="email" placeholder="E-mail" v-model="email">
+          <input type="password" placeholder="Senha" v-model="password">
+          <button class="btn waves-light waves-effect" v-on:click="login()">Entrar</button>
           <router-link to="/cadastro" class="btn waves-light waves-effect orange">Cadastra-se</router-link>
         </span>
       </span>
@@ -25,11 +25,17 @@
   export default {
     name: 'Login',
     components: {
-      LoginTemplate
+      LoginTemplate,
+    },
+    methods: {
+      login(){
+        alert('ok')
+      }
     },
     data () {
       return {
-
+       email: '',
+       password: ''
       }
     }
   }
