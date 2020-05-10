@@ -58,33 +58,14 @@
     },
     methods: {
       perfil(){
-        console.log("ok");
-        axios.post(`http://127.0.0.1:8000/api/profile`, {
+        axios.put(`http://127.0.0.1:8000/api/profile`, {
           name: this.name,
           email: this.email,
           password:this.password,
           password_confirmation: this.password_confirmation
-        })
+        },{"headers": {"authorization": "Bearer " + this.usuario.token}})
           .then(response => {
-            console.log(response)
-            if(response.data.token){
-              // login com sucesso
-              console.log('cadastro realizado com sucesso')
-              sessionStorage.setItem('usuario', JSON.stringify(response.data))
-              this.$router.push('/')
-            }else if(response.data.status == false){
-              //login não existe
-              console.log('login não existe')
-              alert('Erro no cadastro')
-            }else{
-              // erros de validação
-              console.log('erros de validação')
-              let erros = '';
-              for(let erro of Object.values(response.data)){
-                erros += erro +" \n";
-              }
-              alert(erros);
-            }
+              console.log(response.data)
           })
           .catch(e => {
             console.log(e)
