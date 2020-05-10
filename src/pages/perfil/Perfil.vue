@@ -12,7 +12,7 @@
             <div class="file-field input-field">
               <div class="btn">
                 <span>Imagem</span>
-                <input type="file">
+                <input type="file" v-on:change="salvarImagem">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
@@ -45,6 +45,7 @@
         email: '',
         password: '',
         password_confirmation: '',
+        imagem: '',
       }
     },
     created() {
@@ -57,12 +58,29 @@
       }
     },
     methods: {
+      salvarImagem(e){
+        let arquivo = e.target.files || e.dataTransfer.files;
+        if (!arquivo.length){
+          return;
+        }
+
+        let reader = new FileReader();
+        reader.onloadend = (e) => {
+          this.imagem = e.target.result
+        };
+
+        reader.readAsDataURL(arquivo[0]);
+
+        console.log(this.imagem)
+
+      },
       perfil(){
         axios.put(`http://127.0.0.1:8000/api/profile`, {
           name: this.name,
           email: this.email,
           password:this.password,
           password_confirmation: this.password_confirmation
+          image: this.imagem
         },{"headers": {"authorization": "Bearer " + this.usuario.token}})
           .then(response => {
             console.log(response.data)
