@@ -7,8 +7,8 @@
 
         <span>
           <h2>Login</h2>
-          <input type="email" placeholder="E-mail" v-model="email">
-          <input type="password" placeholder="Senha" v-model="password">
+          <input type="email" placeholder="E-mail" autocomplete="off" v-model="email">
+          <input type="password" placeholder="Senha" autocomplete="off" v-model="password">
           <button class="btn waves-light waves-effect" v-on:click="login()">Entrar</button>
           <router-link to="/cadastro" class="btn waves-light waves-effect orange">Cadastra-se</router-link>
         </span>

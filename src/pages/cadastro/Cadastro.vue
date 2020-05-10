@@ -6,10 +6,10 @@
       <span slot="principal">
         <span>
           <h2>Cadastro</h2>
-          <input type="text" placeholder="Nome" v-model="name">
-          <input type="email" placeholder="E-mail" v-model="email">
-          <input type="password" placeholder="Senha" v-model="password">
-          <input type="password" placeholder="Confirme sua Senha" v-model="password_confirmation">
+          <input type="text" placeholder="Nome" autocomplete="off" v-model="name">
+          <input type="email" placeholder="E-mail" autocomplete="off" v-model="email">
+          <input type="password" placeholder="Senha" autocomplete="off" v-model="password">
+          <input type="password" placeholder="Confirme sua Senha" autocomplete="off" v-model="password_confirmation">
           <button class="btn waves-light waves-effect" v-on:click="cadastro()">Enviar</button>
           <router-link to="/login"  class="btn waves-light waves-effect orange">Já tenho conta</router-link>
         </span>
