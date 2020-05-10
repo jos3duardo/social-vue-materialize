@@ -65,9 +65,11 @@
           password_confirmation: this.password_confirmation
         },{"headers": {"authorization": "Bearer " + this.usuario.token}})
           .then(response => {
+            console.log(response.data)
             if(response.data.token){
               console.log(response.data)
-
+              sessionStorage.setItem('usuario', JSON.stringify(response.data));
+              alert('Perfil atualizado')
             }else{
               // erros de validação
               console.log('erros de validação')
