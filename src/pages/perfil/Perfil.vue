@@ -1,7 +1,7 @@
 <template>
   <site-template>
       <span slot="menuesquerdo">
-        <img src="https://static.todamateria.com.br/upload/re/de/redessociaisinteracaopessoas-cke.jpg" class="responsive-img" srcset="">
+        <img :src="usuario.image" class="responsive-img" srcset="">
       </span>
       <span slot="principal">
         <span>
@@ -63,30 +63,25 @@
         if (!arquivo.length){
           return;
         }
-
         let reader = new FileReader();
         reader.onloadend = (e) => {
           this.imagem = e.target.result
         };
-
         reader.readAsDataURL(arquivo[0]);
-
-        console.log(this.imagem)
-
       },
       perfil(){
         axios.put(`http://127.0.0.1:8000/api/profile`, {
           name: this.name,
           email: this.email,
           password:this.password,
-          password_confirmation: this.password_confirmation
+          password_confirmation: this.password_confirmation,
           image: this.imagem
         },{"headers": {"authorization": "Bearer " + this.usuario.token}})
           .then(response => {
-            console.log(response.data)
             if(response.data.token){
               console.log(response.data)
-              sessionStorage.setItem('usuario', JSON.stringify(response.data));
+              this.usuario = response.data
+              sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
               alert('Perfil atualizado')
             }else{
               // erros de validação
