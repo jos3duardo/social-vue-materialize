@@ -44,25 +44,24 @@
           password_confirmation: this.password_confirmation
         })
           .then(response => {
-            console.log(response)
-            if(response.data.token){
-              // login com sucesso
-              console.log('cadastro realizado com sucesso')
-              sessionStorage.setItem('usuario', JSON.stringify(response.data))
-              this.$router.push('/')
-            }else if(response.data.status === false && response.data.validate){
-              //login não existe
-              console.log('login não existe')
-              alert('Erro no cadastro')
-            }else{
-              // erros de validação
-              console.log('erros de validação')
-              let erros = '';
-              for(let erro of Object.values(response.data)){
-                erros += erro +" \n";
+              console.log(response)
+              if(response.data.status){
+                // login com sucesso
+                console.log('cadastro realizado com sucesso')
+                sessionStorage.setItem('usuario', JSON.stringify(response.data.user))
+                this.$router.push('/')
+              }else if(response.data.status === false && response.data.validate){
+                // erros de validação
+                console.log('erros de validação')
+                let errors = '';
+                for(let error of Object.values(response.data.errors)){
+                  errors += error +" \n";
+                }
+                alert(errors);
+              }else{
+                //login não existe
+                alert('Erro no cadastro')
               }
-              alert(erros);
-            }
           })
           .catch(e => {
             console.log(e)
