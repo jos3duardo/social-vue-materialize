@@ -1,11 +1,15 @@
 <template>
   <div class="row">
     <grid-vue class="input-field" tamanho="12">
-      <textarea v-model="conteudo" id="conteudoId" class="materialize-textarea"></textarea>
+      <input type="text" v-model="content.title">
+      <textarea v-if="content.title" v-model="content.text" id="conteudoId" placeholder="Conteudo" class="materialize-textarea"></textarea>
+      <input  v-if="content.title && content.text" type="text" placeholder="link" v-model="content.link">
+      <input  v-if="content.title && content.text" type="text" placeholder="Url da imagem" v-model="content.image">
+
       <label for="conteudoId">O que está acontecendo?</label>
     </grid-vue>
     <p>
-      <grid-vue v-if="conteudo" class="btn waves-effect waves-light  right" tamanho="2 offset-s10">Publicar</grid-vue>
+      <grid-vue v-if="content.title && content.text" class="btn waves-effect waves-light  right" tamanho="2 offset-s10">Publicar</grid-vue>
     </p>
   </div>
 </template>
@@ -21,7 +25,7 @@
     },
     data () {
       return {
-        conteudo: ''
+        content: {title: '', text: '', link: '', image: '' }
       }
     }
   }
