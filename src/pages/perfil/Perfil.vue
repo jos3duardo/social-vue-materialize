@@ -77,19 +77,19 @@
           image: this.imagem
         },{"headers": {"authorization": "Bearer " + this.usuario.token}})
           .then(response => {
-            if(response.data.token){
+            if(response.data.status){
               console.log(response.data)
-              this.usuario = response.data
+              this.usuario = response.data.user
               sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
               alert('Perfil atualizado')
-            }else{
+            }else if(response.data.status === false && response.data.validate){
               // erros de validação
-              console.log('erros de validação')
-              let erros = '';
-              for (let erro of Object.values(response.data)){
-                erros = erro + " ";
+              // console.log('erros de validação')
+              let errors = '';
+              for (let error of Object.values(response.data.errors)){
+                errors = error + " ";
               }
-              alert(erros)
+              alert(errors)
             }
           })
           .catch(e => {
