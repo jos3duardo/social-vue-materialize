@@ -9,7 +9,7 @@
       <label for="conteudoId">O que está acontecendo?</label>
     </grid-vue>
     <p>
-      <grid-vue v-if="content.title && content.text" class="btn waves-effect waves-light  right" tamanho="2 offset-s10">Publicar</grid-vue>
+      <button @click="addContent" v-if="content.title && content.text" class="btn waves-effect waves-light  right" >Publicar</button>
     </p>
   </div>
 </template>
@@ -19,15 +19,30 @@
 
   export default {
     name: 'PublicarConteudoVue',
-    props: [],
-    components: {
-      GridVue,
-    },
+    props: ['user'],
     data () {
       return {
         content: {title: '', text: '', link: '', image: '' }
       }
-    }
+    },
+    methods:{
+      addContent(){
+       this.$http.post(this.$urlAPI+'content/add', {
+         title: this.content.title,
+         text: this.content.text,
+         link: this.content.link,
+         image: this.content.image
+       }, {"headers": {"authorization": "Bearer " + this.user.token}})
+        .then(response => {
+          if (response.data.status){
+            console.log(response.data)
+          }
+        })
+      }
+    },
+    components: {
+      GridVue,
+    },
   }
 </script>
 

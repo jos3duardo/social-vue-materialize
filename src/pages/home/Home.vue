@@ -15,7 +15,7 @@
     </span>
 
     <span slot="principal">
-      <publicar-conteudo-vue />
+      <publicar-conteudo-vue :user="usuario" />
       <card-conteudo-vue
         perfil="https://materializecss.com/images/yuna.jpg"
         nome="Loana Sousa"
