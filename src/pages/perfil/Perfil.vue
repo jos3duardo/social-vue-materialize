@@ -31,7 +31,6 @@
 
 <script>
   import SiteTemplate from "../../templates/SiteTemplate";
-  import axios from "axios";
 
   export default {
     name: 'Perfil',
@@ -70,7 +69,7 @@
         reader.readAsDataURL(arquivo[0]);
       },
       perfil(){
-        axios.put(`http://127.0.0.1:8000/api/profile`, {
+        this.$http.put(this.$urlAPI+`profile`, {
           name: this.name,
           email: this.email,
           password:this.password,
