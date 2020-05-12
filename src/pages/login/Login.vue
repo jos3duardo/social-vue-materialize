@@ -42,23 +42,22 @@
           })
           .then(response => {
             console.log(response)
-            if(response.data.token){
+            if(response.data.status){
               // login com sucesso
-              // console.log('login com sucesso')
-              sessionStorage.setItem('usuario', JSON.stringify(response.data))
+              sessionStorage.setItem('usuario', JSON.stringify(response.data.user))
               this.$router.push('/')
-            }else if(response.data.status == false){
+            }else if(response.data.status === false && response.data.validate){
+              // erros de validação
+              console.log('erros de validação')
+              let errors = '';
+              for (let erro of Object.values(response.data.errors)){
+                errors = erro + " ";
+              }
+              alert(errors)
+            }else{
               //login não existe
               console.log('login não existe')
               alert('Login invalido')
-            }else{
-              // erros de validação
-              console.log('erros de validação')
-              let erros = '';
-              for (let erro of Object.values(response.data)){
-                erros = erro + " ";
-              }
-              alert(erros)
             }
           })
           .catch(e => {

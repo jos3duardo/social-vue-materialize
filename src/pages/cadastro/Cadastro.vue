@@ -50,7 +50,7 @@
               console.log('cadastro realizado com sucesso')
               sessionStorage.setItem('usuario', JSON.stringify(response.data))
               this.$router.push('/')
-            }else if(response.data.status == false){
+            }else if(response.data.status === false && response.data.validate){
               //login não existe
               console.log('login não existe')
               alert('Erro no cadastro')
