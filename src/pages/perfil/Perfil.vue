@@ -95,6 +95,7 @@
           })
           .catch(e => {
             console.log(e)
+            alert("Erro! Tente novamente mais tarde")
           })
       }
     }

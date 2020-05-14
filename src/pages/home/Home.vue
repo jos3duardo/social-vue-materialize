@@ -3,12 +3,12 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img :src="usuario.image" :alt="usuario.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <img :src="user.image" :alt="user.name" class="circle responsive-img"> <!-- notice the "circle" class -->
         </grid-vue>
 
         <grid-vue tamanho="8">
           <span class="black-text">
-            <h5>{{usuario.name}}</h5>
+            <h5>{{user.name}}</h5>
           </span>
         </grid-vue>
       </div>
@@ -16,15 +16,14 @@
 
     <span slot="principal">
       <publicar-conteudo-vue/>
-      <card-conteudo-vue
-        perfil="https://materializecss.com/images/yuna.jpg"
-        nome="Loana Sousa"
-        data="08/05/2020 22:32">
+      <card-conteudo-vue v-for="item in contents" :key="item.id"
+        :perfil="item.user.image"
+        :nome="item.user.name"
+        :data="item.data">
           <card-detalhe-vue
-            imagem="https://materializecss.com/images/sample-1.jpg"
-            titulo=""
-            texto="I am a very simple card. I am good at containing small bits of information.
-                I am convenient because I require little markup to use effectively."
+            :imagem="item.image"
+            :titulo="item.title"
+            :texto="item.text"
           />
       </card-conteudo-vue>
     </span>
@@ -51,13 +50,31 @@
     },
     data () {
       return {
-        usuario:false
+        user: false,
+        contents: []
       }
     },
     created() {
-      let usuarioAux =   this.$store.getters.getUsuario
-      if (usuarioAux) {
-        this.usuario =  this.$store.getters.getUsuario
+      let userAux =   this.$store.getters.getUsuario
+      if (userAux) {
+        this.user =  this.$store.getters.getUsuario
+
+        this.$http.get(this.$urlAPI+`content/list`, {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
+          .then(response => {
+            console.log(response)
+            if (response.data.status){
+              this.contents = response.data.contents.data
+            }
+
+          })
+          .catch(e => {
+            console.log(e)
+            alert("Erro! Tente novamente mais tarde")
+          })
+
+
+
+
       }
     }
   }
