@@ -16,7 +16,7 @@
 
     <span slot="principal">
       <publicar-conteudo-vue/>
-      <card-conteudo-vue v-for="item in contents" :key="item.id"
+      <card-conteudo-vue v-for="item in listaConteudos" :key="item.id"
         :perfil="item.user.image"
         :nome="item.user.name"
         :data="item.data">
@@ -41,17 +41,10 @@
 
   export default {
     name: 'Home',
-    components: {
-      CardConteudoVue,
-      CardDetalheVue,
-      PublicarConteudoVue,
-      SiteTemplate,
-      GridVue
-    },
+
     data () {
       return {
-        user: false,
-        contents: []
+        user: false
       }
     },
     created() {
@@ -59,22 +52,32 @@
       if (userAux) {
         this.user =  this.$store.getters.getUsuario
 
-        this.$http.get(this.$urlAPI+`content/list`, {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
-          .then(response => {
-            console.log(response)
-            if (response.data.status){
-              this.contents = response.data.contents.data
-            }
-
-          })
-          .catch(e => {
+        this.$http.get(this.$urlAPI+`content/list`,
+          {
+            "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
+        })
+        .then( response => {
+          console.log(response)
+          if (response.data.status){
+            this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
+          }
+        })
+        .catch(e => {
             console.log(e)
             alert("Erro! Tente novamente mais tarde")
           })
-
-
-
-
+      }
+    },
+    components: {
+      CardConteudoVue,
+      CardDetalheVue,
+      PublicarConteudoVue,
+      SiteTemplate,
+      GridVue
+    },
+    computed: {
+      listaConteudos(){
+        return this.$store.getters.getConteudoLinhaTempo
       }
     }
   }

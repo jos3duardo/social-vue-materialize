@@ -12,12 +12,10 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.$urlAPI = 'http://127.0.0.1:8000/api/'
 
-let user = sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : null
-
-console.log(user)
 const store = new Vuex.Store({
   state: {
-    usuario: user
+    usuario: sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : null,
+    conteudoLinhaTempo: []
   },
   getters:{
     getUsuario: state => {
@@ -25,11 +23,17 @@ const store = new Vuex.Store({
     },
     getToken: state => {
       return state.usuario.token
+    },
+    getConteudoLinhaTempo: state => {
+      return state.conteudoLinhaTempo
     }
   },
   mutations: {
     setUsuario(state, n){
       state.usuario = n
+    },
+    setConteudoLinhaTempo(state, n){
+      state.conteudoLinhaTempo = n
     }
   }
 })

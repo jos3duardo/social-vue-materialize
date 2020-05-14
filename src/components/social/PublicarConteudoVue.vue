@@ -36,7 +36,13 @@
         .then(response => {
           if (response.data.status){
             console.log(response.data)
+            this.content = {title: '', text: '', link: '', image: '' }
+            this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
           }
+        })
+        .catch(e => {
+          console.log(e)
+          alert("Erro! tente mais tarde!")
         })
       }
     },
