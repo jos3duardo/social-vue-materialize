@@ -6,31 +6,39 @@ import router from './router'
 import axios from 'axios'
 import Vuex from 'vuex'
 
-Vue;use(Vuex)
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.$urlAPI = 'http://127.0.0.1:8000/api/'
 
-var store = {
+let user = sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : null
+
+console.log(user)
+const store = new Vuex.Store({
   state: {
-    name: 'José Eduardo'
+    usuario: user
   },
   getters:{
-    getNome: state => {
-      return state.name
+    getUsuario: state => {
+      return state.usuario
+    },
+    getToken: state => {
+      return state.usuario.token
     }
   },
-  mutations:{
-
+  mutations: {
+    setUsuario(state, n){
+      state.usuario = n
+    }
   }
-}
+})
 
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  store: new Vuex.Store(store),
+  store: store,
   router,
   components: { App },
   template: '<App/>'

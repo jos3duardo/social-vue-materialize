@@ -44,6 +44,7 @@
             console.log(response)
             if(response.data.status){
               // login com sucesso
+              this.$store.commit('setUsuario', response.data.user)
               sessionStorage.setItem('usuario', JSON.stringify(response.data.user))
               this.$router.push('/')
             }else if(response.data.status === false && response.data.validate){
