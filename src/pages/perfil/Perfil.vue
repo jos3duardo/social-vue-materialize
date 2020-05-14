@@ -48,9 +48,9 @@
       }
     },
     created() {
-      let usuarioAux = sessionStorage.getItem('usuario')
+      let usuarioAux =  this.$store.getters.getUsuario
       if (usuarioAux){
-        this.usuario = JSON.parse(usuarioAux)
+        this.usuario = this.$store.getters.getUsuario
         this.name = this.usuario.name;
         this.email = this.usuario.email;
 
@@ -75,11 +75,12 @@
           password:this.password,
           password_confirmation: this.password_confirmation,
           image: this.imagem
-        },{"headers": {"authorization": "Bearer " + this.usuario.token}})
+        },{"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
           .then(response => {
             if(response.data.status){
               console.log(response.data)
               this.usuario = response.data.user
+              this.$store.commit('setUsuario', response.data.user)
               sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
               alert('Perfil atualizado')
             }else if(response.data.status === false && response.data.validate){

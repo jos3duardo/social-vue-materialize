@@ -19,7 +19,7 @@
 
   export default {
     name: 'PublicarConteudoVue',
-    props: ['user'],
+    props: [],
     data () {
       return {
         content: {title: '', text: '', link: '', image: '' }
@@ -32,7 +32,7 @@
          text: this.content.text,
          link: this.content.link,
          image: this.content.image
-       }, {"headers": {"authorization": "Bearer " + this.user.token}})
+       }, {"headers": {"authorization": "Bearer " + this.$store.getters.getToken}})
         .then(response => {
           if (response.data.status){
             console.log(response.data)

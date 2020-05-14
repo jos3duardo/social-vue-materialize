@@ -59,7 +59,7 @@
     created() {
       let usuarioAux = this.$store.getters.getUsuario
       if (usuarioAux){
-        this.usuario = usuarioAux
+        this.usuario =  this.$store.getters.getUsuario
       }else{
         this.$router.push('/login')
       }
