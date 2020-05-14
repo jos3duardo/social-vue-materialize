@@ -5,7 +5,6 @@
         <li v-if="!usuario"> <router-link to="/login">Login</router-link></li>
         <li v-if="!usuario"> <router-link to="/cadastro">Cadastra-se</router-link></li>
         <li v-if="usuario"> <router-link to="/perfil">{{usuario.name}}</router-link></li>
-        <li v-if="usuario"> <a v-on:click="sair()">Sair</a></li>
       </nav-bar-vue>
     </header>
     <main>
@@ -59,11 +58,7 @@
       }
     },
     methods: {
-      sair(){
-        this.$store.commit('setUsuario', null)
-        sessionStorage.clear()
-        this.usuario = false
-      }
+
     }
   }
 </script>
