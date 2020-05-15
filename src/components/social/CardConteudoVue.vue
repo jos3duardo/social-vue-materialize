@@ -40,17 +40,26 @@
     },
     data () {
       return {
-        curtiu: 'favorite_border'
+        curtiu: 'favorite_border',
+        totalCurtidas: 0
       }
     },
     methods: {
       curtida(id){
-        alert(id)
-        if (this.curtiu === 'favorite_border'){
-          this.curtiu = 'favorite'
-        }else {
-          this.curtiu = 'favorite_border'
-        }
+        this.$http.put(this.$urlAPI+'content/like/'+id,{},
+          {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
+        .then(response => {
+          alert(id)
+          if (this.curtiu === 'favorite_border'){
+            this.curtiu = 'favorite'
+          }else {
+            this.curtiu = 'favorite_border'
+          }
+        })
+        .catch(e => {
+          console.log(e)
+          alert("Erro! Tente novamente mais tarde")
+        })
       }
     }
   }
