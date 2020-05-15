@@ -24,6 +24,7 @@
             :imagem="item.image"
             :titulo="item.title"
             :texto="item.text"
+            :link="item.link"
           />
       </card-conteudo-vue>
     </span>

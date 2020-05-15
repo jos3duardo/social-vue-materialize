@@ -1,14 +1,23 @@
 <template>
   <span>
-    <div v-if="imagem" class="card-image">
-      <img :src="imagem">
-      <span class="card-title">{{ titulo || '' }}</span>
+    <div v-if="imagem && imagem != '#'" class="card-image">
+      <a v-if="link && link != '#'" :href="link" target="_blank">
+        <img :src="imagem">
+        <span class="card-title">{{ titulo || '' }}</span>
+      </a>
+      <span v-if="!link || link == '#'">
+        <img :src="imagem">
+        <span class="card-title">{{ titulo || '' }}</span>
+      </span>
     </div>
 
     <div v-if="texto" class="card-content">
-      <p>
-      {{ texto }}
-      </p>
+      <span v-if="!imagem || imagem  == '#'">
+        <span class="card-title">{{ titulo || '' }}</span>
+      </span>
+
+      <p>{{ texto }}</p>
+      <p v-if="link && link != '#'"> <a :href="link" target="_blank">Confira mais aqui...</a> </p>
     </div>
   </span>
 
@@ -18,7 +27,7 @@
 
   export default {
     name: 'CardDetalheVue',
-    props: ['imagem', 'titulo', 'texto'],
+    props: ['imagem', 'titulo', 'texto', 'link'],
     components: {
     },
     data () {
