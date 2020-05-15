@@ -18,6 +18,8 @@
       <publicar-conteudo-vue/>
       <card-conteudo-vue v-for="item in listaConteudos" :key="item.id"
         :id="item.id"
+        :totalCurtidas="item.total_likes"
+        :curtiuConteudo="item.like_content"
         :perfil="item.user.image"
         :nome="item.user.name"
         :data="item.data">

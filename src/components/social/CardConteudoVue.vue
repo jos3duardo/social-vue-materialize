@@ -34,14 +34,14 @@
 
   export default {
     name: 'CardConteudoVue',
-    props: ['id','perfil', 'nome', 'data'],
+    props: ['id','perfil', 'nome', 'data','totalCurtidas','curtiuConteudo'],
     components: {
       GridVue,
     },
     data () {
       return {
-        curtiu: 'favorite_border',
-        totalCurtidas: 0
+        curtiu: this.curtiuConteudo ? 'favorite': 'favorite_border',
+        totalCurtidas: this.totalCurtidas
       }
     },
     methods: {
@@ -51,10 +51,11 @@
         .then(response => {
           if (response.status){
             this.totalCurtidas = response.data.likes
-            if (this.curtiu === 'favorite_border'){
-              this.curtiu = 'favorite'
-            }else {
-              this.curtiu = 'favorite_border'
+            this.$store.commit('setConteudoLinhaTempo', response.data.list.contents.data)
+            if(this.curtiu == 'favorite_border'){
+              this.curtiu = 'favorite';
+            }else{
+              this.curtiu = 'favorite_border';
             }
           }else{
             alert(response.data.error)
