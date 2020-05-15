@@ -22,7 +22,7 @@
             <i class="material-icons">{{curtiu}}</i>{{totalCurtidas}}
           </a>
           <a style="cursor: pointer" @click="abreComentarios(id)">
-            <i class="material-icons">insert_comment</i>22
+            <i class="material-icons">insert_comment</i>{{totalComentarios}}
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
@@ -56,7 +56,7 @@
 
   export default {
     name: 'CardConteudoVue',
-    props: ['id','perfil', 'nome', 'data','totalCurtidas','curtiuConteudo'],
+    props: ['id','perfil', 'nome', 'data','totalCurtidas','curtiuConteudo','totalComentarios'],
     components: {
       GridVue,
     },

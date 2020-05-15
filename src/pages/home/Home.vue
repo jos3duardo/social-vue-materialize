@@ -19,6 +19,7 @@
       <card-conteudo-vue v-for="item in listaConteudos" :key="item.id"
         :id="item.id"
         :totalCurtidas="item.total_likes"
+        :totalComentarios="item.total_comments"
         :curtiuConteudo="item.like_content"
         :perfil="item.user.image"
         :nome="item.user.name"
