@@ -19,7 +19,7 @@
       <div class="card-action">
         <p>
           <a style="cursor: pointer" @click="curtida(id)">
-            <i class="material-icons">{{curtiu}}</i>12
+            <i class="material-icons">{{curtiu}}</i>{{totalCurtidas}}
           </a>
             <i class="material-icons">insert_comment</i>
         </p>
@@ -49,12 +49,17 @@
         this.$http.put(this.$urlAPI+'content/like/'+id,{},
           {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
         .then(response => {
-          alert(id)
-          if (this.curtiu === 'favorite_border'){
-            this.curtiu = 'favorite'
-          }else {
-            this.curtiu = 'favorite_border'
+          if (response.status){
+            this.totalCurtidas = response.data.likes
+            if (this.curtiu === 'favorite_border'){
+              this.curtiu = 'favorite'
+            }else {
+              this.curtiu = 'favorite_border'
+            }
+          }else{
+            alert(response.data.error)
           }
+
         })
         .catch(e => {
           console.log(e)
