@@ -34,8 +34,8 @@
         <p v-if="exibirComentario">
           <ul class="collection">
             <li class="collection-item avatar" v-for="item in comentarios" :key="item.id">
-              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
-              <span class="title">id do usuario = {{ item.user_id }}<small> - {{ item.data }} </small></span>
+              <img :src="item.user.image" alt="" class="circle">
+              <span class="title">{{ item.user.name }}<small> - {{ item.data }} </small></span>
               <p>Gostei desse conteudo </p>
             </li>
             <li class="collection-item avatar">
