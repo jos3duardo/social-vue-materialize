@@ -38,11 +38,6 @@
               <span class="title">{{ item.user.name }}<small> - {{ item.data }} </small></span>
               <p>Gostei desse conteudo </p>
             </li>
-            <li class="collection-item avatar">
-              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
-              <span class="title">Maria da Silva<small> - 12h30 12/03/2018 </small></span>
-              <p>Gostei desse conteudo </p>
-            </li>
           </ul>
         </p>
       </div>
