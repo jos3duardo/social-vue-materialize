@@ -17,6 +17,7 @@
     <span slot="principal">
       <publicar-conteudo-vue/>
       <card-conteudo-vue v-for="item in listaConteudos" :key="item.id"
+        :id="item.id"
         :perfil="item.user.image"
         :nome="item.user.name"
         :data="item.data">
