@@ -6,6 +6,7 @@
           <router-link :to="'/pagina/'+donoPagina.id+'/'+$slug(donoPagina.name,{lower:true})">
             <img :src="donoPagina.image" :alt="donoPagina.name" class="circle responsive-img"> <!-- notice the "circle" class -->
           </router-link>
+          <button @click="amigo(donoPagina.id)" class="btn ">Seguir</button>
         </grid-vue>
 
         <grid-vue tamanho="8">
@@ -57,12 +58,12 @@
 
     data () {
       return {
-        user: false,
+        user: {image:'', name:''},
         urlProximaPagina: null,
         paraScroll: false,
         donoPagina: {
           image:'',
-          neme:''
+          name:''
         }
       }
     },
@@ -134,6 +135,9 @@
             console.log(e)
             alert("Erro! Tente novamente mais tarde")
           })
+      },
+      amigo(id){
+
       }
     }
   }

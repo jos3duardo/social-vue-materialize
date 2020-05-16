@@ -57,7 +57,7 @@
 
     data () {
       return {
-        user: false,
+        user: {image:'', name:''},
         urlProximaPagina: null,
         paraScroll: false
       }
@@ -119,7 +119,7 @@
           })
           .then( response => {
             console.log(response)
-            if (response.data.status){
+            if (response.data.status && this.$route.name === "Home"){
               this.$store.commit('setpaginacaoConteudoLinhaTempo', response.data.contents.data)
               this.urlProximaPagina = response.data.contents.next_page_url
               this.paraScroll = false
