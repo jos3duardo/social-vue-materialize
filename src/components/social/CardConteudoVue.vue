@@ -70,9 +70,17 @@
     },
     methods: {
       curtida(id){
-        this.$http.put(this.$urlAPI+'content/like/'+id,{},
+        let url = ''
+        if (this.$route.name === "Home"){
+          url = 'content/like/'
+        }else{
+          url = 'content/like/page/'
+        }
+        console.log(this.$urlAPI+url+id)
+        this.$http.put(this.$urlAPI+url+id,{},
           {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
-        .then(response => {
+        .then( response => {
+          console.log(response)
           if (response.data.status){
             this.totalCurtidas = response.data.likes
             this.$store.commit('setConteudoLinhaTempo', response.data.list.contents.data)
@@ -84,7 +92,6 @@
           }else{
             alert(response.data.error)
           }
-
         })
         .catch(e => {
           console.log(e)
@@ -98,7 +105,13 @@
         if (!this.textoComentario){
           return
         }
-        this.$http.put(this.$urlAPI+'content/comments/'+id,{texto: this.textoComentario},
+        let url = ''
+        if (this.$route.name === "Home"){
+          url = 'content/comments/'
+        }else{
+          url = 'content/comments/page/'
+        }
+        this.$http.put(this.$urlAPI+url+id,{texto: this.textoComentario},
           {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
           .then( response => {
             // console.log(response)

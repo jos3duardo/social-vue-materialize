@@ -107,7 +107,6 @@
               "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
             })
             .then( response => {
-              console.log(response)
               if (response.data.status){
                 this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
                 this.urlProximaPagina = response.data.contents.next_page_url
