@@ -138,6 +138,21 @@
       },
       amigo(id){
 
+
+        this.$http.post(this.$urlAPI+'user/friend',{id: id},
+          {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
+          .then(response => {
+            console.log(response)
+            if (response.data.status){
+            }else{
+              alert(response)
+            }
+
+          })
+          .catch(e => {
+            console.log(e)
+            alert("Erro! Tente novamente mais tarde")
+          })
       }
     }
   }

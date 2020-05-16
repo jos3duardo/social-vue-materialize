@@ -73,7 +73,7 @@
         this.$http.put(this.$urlAPI+'content/like/'+id,{},
           {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
         .then(response => {
-          if (response.status){
+          if (response.data.status){
             this.totalCurtidas = response.data.likes
             this.$store.commit('setConteudoLinhaTempo', response.data.list.contents.data)
             if(this.curtiu == 'favorite_border'){
