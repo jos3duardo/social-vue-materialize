@@ -6,7 +6,6 @@
           <router-link :to="'/pagina/'+donoPagina.id+'/'+$slug(donoPagina.name,{lower:true})">
             <img :src="donoPagina.image" :alt="donoPagina.name" class="circle responsive-img"> <!-- notice the "circle" class -->
           </router-link>
-          <button @click="amigo(donoPagina.id)" class="btn ">Seguir</button>
         </grid-vue>
 
         <grid-vue tamanho="8">
@@ -14,6 +13,7 @@
             <router-link :to="'/pagina/'+donoPagina.id+'/'+$slug(donoPagina.name,{lower:true})">
               <h5>{{donoPagina.name}}</h5>
             </router-link>
+            <button v-if="exibeBtnSeguir" @click="amigo(donoPagina.id)" class="btn ">Seguir</button>
           </span>
         </grid-vue>
       </div>
@@ -64,7 +64,8 @@
         donoPagina: {
           image:'',
           name:''
-        }
+        },
+        exibeBtnSeguir: false
       }
     },
     created() {
@@ -82,6 +83,9 @@
             this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
             this.urlProximaPagina = response.data.contents.next_page_url
             this.donoPagina = response.data.userPage
+            if (this.donoPagina != this.user.id){
+              this.exibeBtnSeguir = true
+            }
           }
         })
         .catch(e => {
