@@ -13,16 +13,15 @@
             <router-link :to="'/pagina/'+donoPagina.id+'/'+$slug(donoPagina.name,{lower:true})">
               <h5>{{donoPagina.name}}</h5>
             </router-link>
-            <button v-if="exibeBtnSeguir" @click="amigo(donoPagina.id)" class="btn ">Seguir</button>
+            <button v-if="exibeBtnSeguir" @click="amigo(donoPagina.id)" class="btn ">{{textoBtn}}</button>
           </span>
         </grid-vue>
       </div>
     </span>
     <span slot="menuesquerdoamigo">
-      <h3>Seguindo</h3>
-      <li>Pedro</li>
-      <li>Gustavo</li>
-      <li>Leandro</li>
+     <h3>Seguindo</h3>
+      <li v-for="item in amigos" :key="item.id">{{item.name}}</li>
+      <li v-if="!amigos.length">Nenhum usuario</li>
     </span>
 
     <span slot="principal">
@@ -71,7 +70,10 @@
           image:'',
           name:''
         },
-        exibeBtnSeguir: false
+        exibeBtnSeguir: false,
+        amigos: [],
+        amigosLogado: [],
+        textoBtn: 'Seguir'
       }
     },
     created() {
@@ -92,6 +94,23 @@
             if (this.donoPagina != this.user.id){
               this.exibeBtnSeguir = true
             }
+
+            this.$http.get(this.$urlAPI+`user/list/page/friend/`+this.donoPagina.id,
+              {
+                "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
+              })
+              .then( response => {
+                if (response.data.status){
+                  // console.log(response)
+                  this.amigos = response.data.friends
+                  this.amigosLogado = response.data.friendLogged
+                  this.eAmigo()
+                }
+              })
+              .catch(e => {
+                // console.log(response.data.error)
+                alert("Erro! Tente novamente mais tarde")
+              })
           }
         })
         .catch(e => {
@@ -113,7 +132,15 @@
       }
     },
     methods: {
-
+      eAmigo(){
+        for (let amigo of  this.amigosLogado){
+          if (amigo.id === this.donoPagina.id){
+            this.textoBtn = 'Remover'
+            return
+          }
+        }
+        this.textoBtn = 'Seguir'
+      },
       handleScroll() {
         // console.log(window.scrollY);
         // console.log(document.body.clientHeight);//852
@@ -147,13 +174,13 @@
           })
       },
       amigo(id){
-
-
         this.$http.post(this.$urlAPI+'user/friend',{id: id},
           {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
           .then(response => {
-            console.log(response)
+            // console.log(response)
             if (response.data.status){
+              this.amigosLogado = response.data.friends
+              this.eAmigo()
             }else{
               alert(response)
             }

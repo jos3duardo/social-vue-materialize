@@ -20,7 +20,7 @@
     <span slot="menuesquerdoamigo">
       <h3>Seguindo</h3>
       <li v-for="item in amigos" :key="item.id">{{item.name}}</li>
-      <li v-if="!amigos">Nenhum usuario</li>
+      <li v-if="!amigos.length">Nenhum usuario</li>
     </span>
     <span slot="principal">
       <publicar-conteudo-vue/>
