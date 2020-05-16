@@ -18,7 +18,7 @@
       <publicar-conteudo-vue/>
       <card-conteudo-vue v-for="item in listaConteudos" :key="item.id"
         :id="item.id"
-        :totalCurtidas="item.total_likes"
+        :curtidas="item.total_likes"
         :comentarios="item.comments"
         :curtiuConteudo="item.like_content"
         :perfil="item.user.image"
@@ -62,7 +62,6 @@
             "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
         })
         .then( response => {
-          console.log(response)
           if (response.data.status){
             this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
           }

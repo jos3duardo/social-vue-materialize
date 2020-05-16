@@ -19,15 +19,15 @@
       <div class="card-action">
         <p>
           <a style="cursor: pointer" @click="curtida(id)">
-            <i class="material-icons">{{curtiu}}</i>{{totalCurtidas}}
+            <i class="material-icons">{{curtiu}}</i>{{curtidas}}
           </a>
-          <a style="cursor: pointer" @click="abreComentarios(id)">
+          <a style="cursor: pointer" @click="abreComentarios()">
             <i class="material-icons">insert_comment</i>{{ comentarios.length }}
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
-          <input type="text" placeholder="Comentar">
-          <button class="btn waves-effect waves-light orange">
+          <input type="text" v-model="textoComentario" placeholder="Comentar">
+          <button v-if="textoComentario" @click="comentar(id)" class="btn waves-effect waves-light orange">
             <i class="material-icons">send</i>
           </button>
         </p>
@@ -36,7 +36,7 @@
             <li class="collection-item avatar" v-for="item in comentarios" :key="item.id">
               <img :src="item.user.image" alt="" class="circle">
               <span class="title">{{ item.user.name }}<small> - {{ item.data }} </small></span>
-              <p>Gostei desse conteudo </p>
+              <p>{{item.text}} </p>
             </li>
           </ul>
         </p>
@@ -51,15 +51,16 @@
 
   export default {
     name: 'CardConteudoVue',
-    props: ['id','perfil', 'nome', 'data','totalCurtidas','curtiuConteudo','comentarios'],
+    props: ['id','perfil', 'nome', 'data','curtidas','curtiuConteudo','comentarios'],
     components: {
       GridVue,
     },
     data () {
       return {
         curtiu: this.curtiuConteudo ? 'favorite': 'favorite_border',
-        totalCurtidas: this.totalCurtidas,
-        exibirComentario: false
+        totalCurtidas: this.curtidas,
+        exibirComentario: false,
+        textoComentario: ''
       }
     },
     methods: {
@@ -85,8 +86,28 @@
           alert("Erro! Tente novamente mais tarde")
         })
       },
-      abreComentarios(id){
+      abreComentarios(){
         this.exibirComentario = !this.exibirComentario
+      },
+      comentar(id){
+        if (!this.textoComentario){
+          return
+        }
+        this.$http.put(this.$urlAPI+'content/comments/'+id,{texto: this.textoComentario},
+          {"headers": {"authorization": "Bearer " +  this.$store.getters.getToken}})
+          .then( response => {
+            // console.log(response)
+            if (response.status){
+              this.textoComentario = ""
+              this.$store.commit('setConteudoLinhaTempo', response.data.list.contents.data)
+            }else{
+              alert(response.data.error)
+            }
+          })
+          .catch(e => {
+            console.log(e)
+            alert("Erro! Tente novamente mais tarde")
+          })
       }
     }
   }
