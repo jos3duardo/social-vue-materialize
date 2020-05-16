@@ -31,7 +31,9 @@
             :link="item.link"
           />
       </card-conteudo-vue>
-      <button v-if="urlProximaPagina" @click="carregapaginacao()" class="btn blue"> Mais... </button>
+<!--      <button v-if="urlProximaPagina" @click="carregapaginacao()" class="btn blue"> Mais... </button>-->
+
+      <div v-scroll="handleScroll"></div>
     </span>
 
   </site-template>
@@ -51,7 +53,8 @@
     data () {
       return {
         user: false,
-        urlProximaPagina: null
+        urlProximaPagina: null,
+        paraScroll: false
       }
     },
     created() {
@@ -89,6 +92,18 @@
       }
     },
     methods: {
+
+      handleScroll() {
+        console.log(window.scrollY);
+        console.log(document.body.clientHeight);//852
+        if (this.paraScroll){
+          return
+        }
+        if (window.scrollY >= document.body.clientHeight - 852){
+          this.paraScroll = true
+          this.carregapaginacao()
+        }
+      },
       carregapaginacao(){
         if (!this.urlProximaPagina){
           return
@@ -102,6 +117,7 @@
             if (response.data.status){
               this.$store.commit('setpaginacaoConteudoLinhaTempo', response.data.contents.data)
               this.urlProximaPagina = response.data.contents.next_page_url
+              this.paraScroll = false
             }
           })
           .catch(e => {
