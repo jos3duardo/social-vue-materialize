@@ -94,8 +94,8 @@
     methods: {
 
       handleScroll() {
-        console.log(window.scrollY);
-        console.log(document.body.clientHeight);//852
+        // console.log(window.scrollY);
+        // console.log(document.body.clientHeight);//852
         if (this.paraScroll){
           return
         }

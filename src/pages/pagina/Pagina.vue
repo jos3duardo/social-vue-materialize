@@ -3,12 +3,12 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img :src="user.image" :alt="user.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <img :src="donoPagina.image" :alt="donoPagina.name" class="circle responsive-img"> <!-- notice the "circle" class -->
         </grid-vue>
 
         <grid-vue tamanho="8">
           <span class="black-text">
-            <h5>{{user.name}}</h5>
+            <h5>{{donoPagina.name}}</h5>
           </span>
         </grid-vue>
       </div>
@@ -54,7 +54,11 @@
       return {
         user: false,
         urlProximaPagina: null,
-        paraScroll: false
+        paraScroll: false,
+        donoPagina: {
+          image:'',
+          neme:''
+        }
       }
     },
     created() {
@@ -62,7 +66,7 @@
       if (userAux) {
         this.user =  this.$store.getters.getUsuario
 
-        this.$http.get(this.$urlAPI+`content/list`,
+        this.$http.get(this.$urlAPI+`content/page/`+this.$route.params.id,
           {
             "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
         })
@@ -71,6 +75,7 @@
           if (response.data.status){
             this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
             this.urlProximaPagina = response.data.contents.next_page_url
+            this.donoPagina = response.data.userPage
           }
         })
         .catch(e => {
@@ -94,8 +99,8 @@
     methods: {
 
       handleScroll() {
-        console.log(window.scrollY);
-        console.log(document.body.clientHeight);//852
+        // console.log(window.scrollY);
+        // console.log(document.body.clientHeight);//852
         if (this.paraScroll){
           return
         }
