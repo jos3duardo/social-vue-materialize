@@ -19,8 +19,10 @@
       </div>
     </span>
     <span slot="menuesquerdoamigo">
-     <h3>Seguindo</h3>
-      <li v-for="item in amigos" :key="item.id">{{item.name}}</li>
+      <h3>Seguindo</h3>
+      <router-link v-for="item in amigos" :key="item.id" :to="'/pagina/'+item.id+'/'+$slug(item.name,{lower:true})">
+        <li >{{item.name}}</li>
+      </router-link>
       <li v-if="!amigos.length">Nenhum usuario</li>
     </span>
 
@@ -77,47 +79,7 @@
       }
     },
     created() {
-      let userAux =   this.$store.getters.getUsuario
-      if (userAux) {
-        this.user =  this.$store.getters.getUsuario
-
-        this.$http.get(this.$urlAPI+`content/page/`+this.$route.params.id,
-          {
-            "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
-        })
-        .then( response => {
-          console.log(response)
-          if (response.data.status){
-            this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
-            this.urlProximaPagina = response.data.contents.next_page_url
-            this.donoPagina = response.data.userPage
-            if (this.donoPagina != this.user.id){
-              this.exibeBtnSeguir = true
-            }
-
-            this.$http.get(this.$urlAPI+`user/list/page/friend/`+this.donoPagina.id,
-              {
-                "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
-              })
-              .then( response => {
-                if (response.data.status){
-                  // console.log(response)
-                  this.amigos = response.data.friends
-                  this.amigosLogado = response.data.friendLogged
-                  this.eAmigo()
-                }
-              })
-              .catch(e => {
-                // console.log(response.data.error)
-                alert("Erro! Tente novamente mais tarde")
-              })
-          }
-        })
-        .catch(e => {
-            console.log(e)
-            alert("Erro! Tente novamente mais tarde")
-        })
-      }
+      this.atualizaPagina()
     },
     components: {
       CardConteudoVue,
@@ -131,7 +93,55 @@
         return this.$store.getters.getConteudoLinhaTempo
       }
     },
+    watch: {
+      '$route':'atualizaPagina'
+    },
     methods: {
+      atualizaPagina(){
+        let userAux =   this.$store.getters.getUsuario
+        if (userAux) {
+          this.user =  this.$store.getters.getUsuario
+
+          this.$http.get(this.$urlAPI+`content/page/`+this.$route.params.id,
+            {
+              "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
+            })
+            .then( response => {
+              console.log(response)
+              if (response.data.status){
+                this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
+                this.urlProximaPagina = response.data.contents.next_page_url
+                this.donoPagina = response.data.userPage
+                if (this.donoPagina.id != this.user.id){
+                  this.exibeBtnSeguir = true
+                }else{
+                  this.exibeBtnSeguir = false
+                }
+
+                this.$http.get(this.$urlAPI+`user/list/page/friend/`+this.donoPagina.id,
+                  {
+                    "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
+                  })
+                  .then( response => {
+                    if (response.data.status){
+                      // console.log(response)
+                      this.amigos = response.data.friends
+                      this.amigosLogado = response.data.friendLogged
+                      this.eAmigo()
+                    }
+                  })
+                  .catch(e => {
+                    // console.log(response.data.error)
+                    alert("Erro! Tente novamente mais tarde")
+                  })
+              }
+            })
+            .catch(e => {
+              console.log(e)
+              alert("Erro! Tente novamente mais tarde")
+            })
+        }
+      },
       eAmigo(){
         for (let amigo of  this.amigosLogado){
           if (amigo.id === this.donoPagina.id){
