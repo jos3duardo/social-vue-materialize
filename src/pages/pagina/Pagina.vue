@@ -3,12 +3,16 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img :src="donoPagina.image" :alt="donoPagina.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <router-link :to="'/pagina/'+donoPagina.id">
+            <img :src="donoPagina.image" :alt="donoPagina.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          </router-link>
         </grid-vue>
 
         <grid-vue tamanho="8">
           <span class="black-text">
-            <h5>{{donoPagina.name}}</h5>
+            <router-link :to="'/pagina/'+donoPagina.id">
+              <h5>{{donoPagina.name}}</h5>
+            </router-link>
           </span>
         </grid-vue>
       </div>
@@ -22,6 +26,7 @@
         :comentarios="item.comments"
         :curtiuConteudo="item.like_content"
         :perfil="item.user.image"
+        :usuarioId="item.user.id"
         :nome="item.user.name"
         :data="item.data">
           <card-detalhe-vue

@@ -3,12 +3,16 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <grid-vue tamanho="4">
-          <img :src="user.image" :alt="user.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <router-link :to="'/pagina/'+user.id">
+            <img :src="user.image" :alt="user.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          </router-link>
         </grid-vue>
 
         <grid-vue tamanho="8">
           <span class="black-text">
-            <h5>{{user.name}}</h5>
+            <router-link :to="'/pagina/'+user.id">
+              <h5>{{user.name}}</h5>
+            </router-link>
           </span>
         </grid-vue>
       </div>
@@ -23,6 +27,7 @@
         :curtiuConteudo="item.like_content"
         :perfil="item.user.image"
         :nome="item.user.name"
+        :usuarioId="item.user.id"
         :data="item.data">
           <card-detalhe-vue
             :imagem="item.image"

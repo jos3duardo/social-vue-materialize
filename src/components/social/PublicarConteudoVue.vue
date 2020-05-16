@@ -34,8 +34,9 @@
          image: this.content.image
        }, {"headers": {"authorization": "Bearer " + this.$store.getters.getToken}})
         .then(response => {
+          console.log(response.data)
+
           if (response.data.status){
-            console.log(response.data)
             this.content = {title: '', text: '', link: '', image: '' }
             this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
           }else if(response.data.status === false && response.data.validate){
