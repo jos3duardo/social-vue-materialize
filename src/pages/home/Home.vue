@@ -17,7 +17,11 @@
         </grid-vue>
       </div>
     </span>
-
+    <span slot="menuesquerdoamigo">
+      <h3>Seguindo</h3>
+      <li v-for="item in amigos" :key="item.id">{{item.name}}</li>
+      <li v-if="!amigos">Nenhum usuario</li>
+    </span>
     <span slot="principal">
       <publicar-conteudo-vue/>
       <card-conteudo-vue v-for="item in listaConteudos" :key="item.id"
@@ -59,7 +63,8 @@
       return {
         user: {image:'', name:''},
         urlProximaPagina: null,
-        paraScroll: false
+        paraScroll: false,
+        amigos: []
       }
     },
     created() {
@@ -76,6 +81,22 @@
           if (response.data.status){
             this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
             this.urlProximaPagina = response.data.contents.next_page_url
+
+            this.$http.get(this.$urlAPI+`user/list/friend`,
+              {
+                "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
+              })
+              .then( response => {
+                if (response.data.status){
+                  console.log(response)
+                  this.amigos = response.data.friends
+                }
+              })
+              .catch(e => {
+                console.log(response.data.error)
+                alert("Erro! Tente novamente mais tarde")
+              })
+
           }
         })
         .catch(e => {

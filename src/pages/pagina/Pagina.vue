@@ -18,6 +18,12 @@
         </grid-vue>
       </div>
     </span>
+    <span slot="menuesquerdoamigo">
+      <h3>Seguindo</h3>
+      <li>Pedro</li>
+      <li>Gustavo</li>
+      <li>Leandro</li>
+    </span>
 
     <span slot="principal">
       <publicar-conteudo-vue/>
