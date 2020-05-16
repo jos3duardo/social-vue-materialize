@@ -31,6 +31,7 @@
             :link="item.link"
           />
       </card-conteudo-vue>
+      <button v-if="urlProximaPagina" @click="carregapaginacao()" class="btn blue"> Mais... </button>
     </span>
 
   </site-template>
@@ -49,7 +50,8 @@
 
     data () {
       return {
-        user: false
+        user: false,
+        urlProximaPagina: null
       }
     },
     created() {
@@ -62,14 +64,16 @@
             "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
         })
         .then( response => {
+          console.log(response)
           if (response.data.status){
             this.$store.commit('setConteudoLinhaTempo', response.data.contents.data)
+            this.urlProximaPagina = response.data.contents.next_page_url
           }
         })
         .catch(e => {
             console.log(e)
             alert("Erro! Tente novamente mais tarde")
-          })
+        })
       }
     },
     components: {
@@ -82,6 +86,28 @@
     computed: {
       listaConteudos(){
         return this.$store.getters.getConteudoLinhaTempo
+      }
+    },
+    methods: {
+      carregapaginacao(){
+        if (!this.urlProximaPagina){
+          return
+        }
+        this.$http.get(this.urlProximaPagina,
+          {
+            "headers": {"authorization": "Bearer " +  this.$store.getters.getToken}
+          })
+          .then( response => {
+            console.log(response)
+            if (response.data.status){
+              this.$store.commit('setpaginacaoConteudoLinhaTempo', response.data.contents.data)
+              this.urlProximaPagina = response.data.contents.next_page_url
+            }
+          })
+          .catch(e => {
+            console.log(e)
+            alert("Erro! Tente novamente mais tarde")
+          })
       }
     }
   }

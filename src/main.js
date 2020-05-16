@@ -34,6 +34,11 @@ const store = new Vuex.Store({
     },
     setConteudoLinhaTempo(state, n){
       state.conteudoLinhaTempo = n
+    },
+    setpaginacaoConteudoLinhaTempo(state, lista){
+      for (let item of lista){
+        state.conteudoLinhaTempo.push(item)
+      }
     }
   }
 })
